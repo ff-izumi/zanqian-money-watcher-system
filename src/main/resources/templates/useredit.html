@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>安手账</title>
+    <script src="js/jquery/2.0.0/jquery.min.js"></script>
+    <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script src="js/vue/2.5.16/vue.min.js"></script>
+    <script src="js/axios/0.17.1/axios.min.js"></script>
+    <script>
+        $(function(){
+            var data4Vue = {
+                uri:'useredit',
+                result: [],
+                user:{birthday:'',gender:'',introduction:''},
+            };
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                methods: {
+                    useredit:function(){
+                        var url =  this.uri;
+                        if(0==this.user.username.length){
+                            $("span.errorMessage").html("用户名不可为空");
+                            $("div.usereditErrorMessageDiv").css("visibility","visible");
+                            return;
+                        }
+                        if(0==this.user.birthday){
+                            $("span.errorMessage").html("生日不可为空");
+                            $("div.usereditErrorMessageDiv").css("visibility","visible");
+                            return;
+                        }
+                        if(0==this.user.gender){
+                            $("span.errorMessage").html("性别不可为空");
+                            $("div.usereditErrorMessageDiv").css("visibility","visible");
+                            return;
+                        }
+                        if(0==this.user.introduction){
+                            $("span.errorMessage").html("个性签名不可为空");
+                            $("div.usereditErrorMessageDiv").css("visibility","visible");
+                            return;
+                        }
+
+                        axios.post(url,this.user).then(function(response) {
+                            var result = response.data;
+                            if(result.code==0){
+                                alert("修改成功");
+                                location.href="index";
+                            }
+                            else{
+                                $("span.errorMessage").html(result.message);
+                                $("div.loginErrorMessageDiv").css("visibility","visible");
+                            }
+                        });
+                    }
+                }
+            });
+        })
+
+    </script>
+</head>
+<body ng-app="app" ng-controller="MainController">
+<h1>安手账用户编辑</h1>
+<div id="workingArea">
+    <div class="usereditDiv">
+        <div class="usereditErrorMessageDiv">
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <span class="errorMessage"></span>
+            </div>
+        </div>
+        <table cellspacing="1" style="background-color: #a0c6e5">
+            <tr>
+                <td>用户名：</td>
+                <td><input  v-model="user.username" type="text" th:text="${session.user.username}"/></td>
+            </tr>
+            <tr>
+                <td>生日：</td>
+                <td><input v-model="user.birthday" type="date" th:value="${session.user.birthday}"> </td>
+            </tr>
+            <tr>
+                <td>性别：</td>
+                <td><input name="gender" v-model="user.gender" type="radio" value="男"/>男
+                    <input name="gender" v-model="user.gender" type="radio" value="女"/>女
+                    <input name="gender" v-model="user.gender" type="radio" value="未知" checked/>未知
+                </td>
+            </tr>
+            <tr>
+                <td>个性签名：</td>
+                <td><input v-model="user.introduction" type="text" th:value="${session.user.introduction}"> </td>
+            </tr>
+        </table>
+        <a  @click="useredit"><input type="button" value="确认"/></a>
+    </div>
+</div>
+</body>
+</html>

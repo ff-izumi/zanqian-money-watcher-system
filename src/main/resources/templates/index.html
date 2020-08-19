@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>安手账</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body ng-app="app" ng-controller="MainController">
+<h1>安手账</h1>
+<h3 th:text="'登录用户：'"></h3>
+<p th:text="${session.user.username}"><a href="/logout">注销</a></p>
+<a href="/useredit">编辑用户</a>
+
+</body>
+</html>
