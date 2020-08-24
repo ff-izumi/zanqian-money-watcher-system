@@ -21,7 +21,7 @@
                 methods: {
                     useredit:function(){
                         var url =  this.uri;
-                        if(0==this.user.username.length){
+                        if(0==this.user.username){
                             $("span.errorMessage").html("用户名不可为空");
                             $("div.usereditErrorMessageDiv").css("visibility","visible");
                             return;

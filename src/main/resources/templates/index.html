@@ -8,7 +8,8 @@
 <body ng-app="app" ng-controller="MainController">
 <h1>安手账</h1>
 <h3 th:text="'登录用户：'"></h3>
-<p th:text="${session.user.username}"><a href="/logout">注销</a></p>
+<p th:text="${session.user.username}"></p>
+<a href="/logout">注销</a>
 <a href="/useredit">编辑用户</a>
 
 </body>

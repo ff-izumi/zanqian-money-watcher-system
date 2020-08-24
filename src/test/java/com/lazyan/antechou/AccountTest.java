@@ -1,15 +1,22 @@
 package com.lazyan.antechou;
 
+import com.lazyan.antechou.mapper.IpDao;
 import com.lazyan.antechou.pojo.Account;
 import com.lazyan.antechou.pojo.User;
+import com.lazyan.antechou.service.IpService;
 import com.lazyan.antechou.service.LoginService;
 import com.lazyan.antechou.service.RegisterService;
+import com.lazyan.antechou.util.IpDateTime;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
 
 public class AccountTest extends ApplicationTests{
     @Autowired RegisterService registerService;
     @Autowired LoginService loginService;
+    @Autowired IpService ipService;
+
     @Test
     public void insertAccountTest(){
         Account account = new Account();
@@ -40,5 +47,24 @@ public class AccountTest extends ApplicationTests{
         System.out.println(user);
         System.out.println(loginService.isExist(mailbox,password));
 
+    }
+
+    @Test
+    public void dateTest(){
+        String date = IpDateTime.IpDateTime();
+        System.out.println(date);
+    }
+
+    @Test
+    public void sqlIpTest(){
+        ArrayList<Integer> list_1 = ipService.selectIpAid();
+        for (int i = 0; i < list_1.size(); i++) {
+            System.out.println(list_1.get(i));
+        }
+
+        ArrayList<Integer> list_2 = ipService.selectIpId(2);
+        for (int i = 0; i < list_2.size(); i++) {
+            System.out.println(list_2.get(i));
+        }
     }
 }

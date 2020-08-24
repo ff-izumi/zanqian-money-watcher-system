@@ -3,6 +3,7 @@ package com.lazyan.antechou.pojo;
 public class Ip {
     private int id;
     private String ip;
+    private String datetime;
     private int aid;
     private int uid;
 
@@ -20,6 +21,14 @@ public class Ip {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     public int getAid() {

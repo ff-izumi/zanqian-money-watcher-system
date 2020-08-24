@@ -4,6 +4,7 @@ import com.lazyan.antechou.pojo.Account;
 import com.lazyan.antechou.pojo.Ip;
 import com.lazyan.antechou.pojo.User;
 import com.lazyan.antechou.service.LoginService;
+import com.lazyan.antechou.util.IpDateTime;
 import com.lazyan.antechou.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,9 @@ public class LoginController {
         String lost_ip = account.getLost_ip();
         boolean exist = loginService.isExist(mailbox,password);
         Ip login_ip = new Ip();
+        String login_time = IpDateTime.IpDateTime();
         login_ip.setIp(lost_ip);
+        login_ip.setDatetime(login_time);
         login_ip.setAid(loginService.findAidByMailbox(mailbox));
         login_ip.setUid(loginService.findUidByMailbox(mailbox));
         if(exist){
