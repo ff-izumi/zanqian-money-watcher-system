@@ -1,6 +1,7 @@
 前言：本项目的目的是巩固练习所学习的java及spring的知识点。属于第一次完全独立设计和编写完整的web项目，并不是一个成熟的web项目，仅供参考。
 
 github:[lazyAN0/antechou](https://github.com/lazyAN0/antechou)
+
 gitee:[ lazyAN / antechou](https://gitee.com/lazyan/antechou)
 
 个人博客：[lazyAN](http://www.lazyan.top/)
