@@ -43,7 +43,7 @@ gitee:[ lazyAN / antechou](https://gitee.com/lazyan/antechou)
 
 **数据库设计**
 
-![数据库设计表](http://img.lazyan.top/img/1.png)
+![数据库设计表](http://img.lazyan.top/img/2.png)
 
 1. 账号表
 
