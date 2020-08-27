@@ -46,12 +46,21 @@ gitee:[ lazyAN / antechou](https://gitee.com/lazyan/antechou)
 ![数据库设计表](http://img.lazyan.top/img/1.png)
 
 1. 账号表
+
    保存账号密码（后期可能改造成加密表）信息
+   
 2. 用户表
+
    保存用户名，性别，生日等信息。
+   
 3. Ip表
+
    保存登录ip和登陆时间的信息。
+   
 4. 账单表
+
    保存每次收入或支出信息。
+   
 5. 账单分类表
+
    保存账单的分类信息。
