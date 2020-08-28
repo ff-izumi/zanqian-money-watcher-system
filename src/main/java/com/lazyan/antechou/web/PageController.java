@@ -48,4 +48,14 @@ public class PageController {
             return "useredit";
         }
     }
+
+    @GetMapping("/addbill")
+    public String addbill(HttpSession session){
+        Object Login = session.getAttribute("user");
+        if (Login == null){
+            return "login";
+        }else {
+            return "addbill";
+        }
+    }
 }
