@@ -13,7 +13,7 @@ public interface TlistDao {
     List<HashMap> findAllByUid(@Param("uid") int uid);
 
     //新增一条新的账单信息
-    @Insert("INSERT INTO ttype(uid,in_ex,amount,tid,remarks,datetime) VALUES (#{uid},#{in_ex},#{amount},#{tid},#{remarks},#{datetime});")
+    @Insert("INSERT INTO tlist(uid,in_ex,amount,tid,remarks,datetime) VALUES (#{uid},#{in_ex},#{amount},#{tid},#{remarks},#{datetime});")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertNewTlist(Tlist tlist);
 

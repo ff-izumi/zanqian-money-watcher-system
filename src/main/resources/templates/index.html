@@ -8,6 +8,7 @@
     <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="js/vue/2.5.16/vue.min.js"></script>
     <script src="js/axios/0.17.1/axios.min.js"></script>
+    <script src="js/moment/2.22.2/moment.js"></script>
     <script>
         $(function(){
             var data4Vue = {
@@ -31,7 +32,9 @@
                 }
             });
         });
-
+        Vue.filter("dateFilter", function(date, formatPattern){
+            return moment(date).format(formatPattern || "YYYY-MM-DD HH:mm:ss");
+        });
     </script>
 </head>
 <body ng-app="app" ng-controller="MainController">
@@ -63,7 +66,7 @@
                 <td>{{bean.amount}}</td>
                 <td>{{bean.type}}</td>
                 <td>{{bean.remarks}}</td>
-                <td>{{bean.datetime}}</td>
+                <td>{{bean.datetime | dateFilter}}</td>
             </tr>
             </tbody>
         </table>
