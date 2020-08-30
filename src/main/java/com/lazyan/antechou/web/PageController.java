@@ -58,4 +58,13 @@ public class PageController {
             return "addbill";
         }
     }
+    @GetMapping("/bill_list_edit")
+    public String billedit(HttpSession session){
+        Object Login = session.getAttribute("user");
+        if (Login == null){
+            return "login";
+        }else {
+            return "editBill";
+        }
+    }
 }

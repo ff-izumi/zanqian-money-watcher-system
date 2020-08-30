@@ -10,6 +10,12 @@
     <script src="js/axios/0.17.1/axios.min.js"></script>
     <script src="js/moment/2.22.2/moment.js"></script>
     <script>
+        function checkDeleteLink(){
+            var confirmDelete = confirm("确认要删除");
+            if(confirmDelete)
+                return true;
+            return false;
+        };
         $(function(){
             var data4Vue = {
                 uri:'billes',
@@ -28,7 +34,20 @@
                         axios.get(url).then(function(response) {
                             vue.beans = response.data;
                         });
-                    }
+                    },
+                    deleteBill: function (id) {
+                        if(!checkDeleteLink())
+                            return;
+                        var url = this.uri+"/"+id;
+                        axios.delete(url).then(function(response){
+                            if(0!=response.data.length){
+                                alert(response.data);
+                            }
+                            else{
+                                vue.list(0);
+                            }
+                        });
+                    },
                 }
             });
         });
@@ -57,6 +76,8 @@
                 <th>分类</th>
                 <th>备注</th>
                 <th>时间</th>
+                <th>编辑</th>
+                <th>删除</th>
             </tr>
             </thead>
             <tbody>
@@ -67,6 +88,8 @@
                 <td>{{bean.type}}</td>
                 <td>{{bean.remarks}}</td>
                 <td>{{bean.datetime | dateFilter}}</td>
+                <td><a :href="'bill_list_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a></td>
+                <td><a href="#nowhere"  @click="deleteBill(bean.id)"><span class="glyphicon glyphicon-trash"></span></a></td>
             </tr>
             </tbody>
         </table>
