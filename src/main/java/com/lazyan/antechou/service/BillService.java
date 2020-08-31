@@ -15,14 +15,12 @@ public class BillService {
 
     //查询用户的账单信息
     public Object findAllByUid(int uid){
-        Object obj =  tlistDao.findAllByUid(uid);
-        return obj;
+        return tlistDao.findAllByUid(uid);
     }
 
     //查询用户的分类信息
     public Object findAllTypeByUid(int uid){
-        Object obj = ttypeDao.findAllTypeByUid(uid);
-        return obj;
+        return ttypeDao.findAllTypeByUid(uid);
     }
 
     //新增一条账单记录
@@ -53,5 +51,10 @@ public class BillService {
     //删除一个分类信息
     public void deleteTtypeByid(int id){
         ttypeDao.deleteTtypeByid(id);
+    }
+
+    //查询该用户分类的总数
+    public int countTypeByUid(int uid){
+        return ttypeDao.countTypeByUid(uid);
     }
 }

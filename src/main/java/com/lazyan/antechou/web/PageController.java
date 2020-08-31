@@ -64,7 +64,25 @@ public class PageController {
         if (Login == null){
             return "login";
         }else {
-            return "editBill";
+            return "editbill";
+        }
+    }
+    @GetMapping("/type")
+    public String type(HttpSession session){
+        Object Login = session.getAttribute("user");
+        if (Login == null){
+            return "login";
+        }else {
+            return "type";
+        }
+    }
+    @GetMapping("/type_list_edit")
+    public String typeedit(HttpSession session){
+        Object Login = session.getAttribute("user");
+        if (Login == null){
+            return "login";
+        }else {
+            return "edittype";
         }
     }
 }

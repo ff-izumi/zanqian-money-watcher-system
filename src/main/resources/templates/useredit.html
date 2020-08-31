@@ -86,7 +86,6 @@
                     <input name="gender" v-model="user.gender" type="radio" value="未知" checked/>未知
                 </td>
             </tr>
-            <tr v-for="bean in beans ">
             <tr>
                 <td>个性签名：</td>
                 <td><input v-model="user.introduction" type="text" th:value="${session.user.introduction}"> </td>

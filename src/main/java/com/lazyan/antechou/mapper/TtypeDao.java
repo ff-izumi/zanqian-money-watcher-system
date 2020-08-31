@@ -14,7 +14,7 @@ public interface TtypeDao {
     List<HashMap> findAllTypeByUid(@Param("uid") int uid);
 
     //新增一个新分类
-    @Insert("INSERT INTO tlist(type,uid) VALUES (#{type},#{uid});")
+    @Insert("INSERT INTO ttype(type,uid) VALUES (#{type},#{uid});")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertNewTtype(Ttype ttype);
 
@@ -25,4 +25,8 @@ public interface TtypeDao {
     //根据id删除一条数据
     @Delete("DELETE FROM ttype WHERE id = #{id}")
     void deleteTtypeByid(@Param("id") int id);
+
+    //查询用户分类的总数
+    @Select("SELECT count(*) FROM ttype WHERE uid = #{uid}")
+    int countTypeByUid(@Param("uid") int uid);
 }
