@@ -2,6 +2,7 @@ package com.lazyan.antechou.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +26,15 @@ public class PageController {
 
     @GetMapping("/index")
     public String index(HttpSession session){
+        Object Login = session.getAttribute("user");
+        if (Login == null){
+            return "login";
+        }else {
+            return "index";
+        }
+    }
+    @RequestMapping("/")
+    public String index1(HttpSession session) {
         Object Login = session.getAttribute("user");
         if (Login == null){
             return "login";

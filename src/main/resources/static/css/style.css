@@ -1,0 +1,79 @@
+body {
+    background: linear-gradient(#66ccff, #00ffcc);
+    font-family: "Microsoft YaHei";
+}
+
+.main {
+    height: 100vh;
+}
+
+.login-box {
+    text-align: center;
+    padding: 50px 30px 50px;
+    margin: 8em auto 0;
+}
+
+.login-box h1 {
+    font-weight: 400;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-row {
+    margin: 10px 0px;
+}
+
+.txtb {
+    margin: auto;
+    width: 240px;
+    display: block;
+    box-sizing: border-box;
+    background: #ffffff28;
+    border: 1px solid white;
+    padding: 10px 20px;
+    color: #000;
+    outline: none;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.login-btnP {
+    margin: 20px;
+}
+.login-btnP a{display: block;width: 90px;margin:auto}
+
+.login-btnP a:hover {
+    color:#fff;
+    text-decoration: none;
+}
+.register{line-height: 50px;font-size: 18px;font-weight: bold;color: #000!important;}
+.login-btn {
+    background: #2c3e50;
+    border: 0;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.loginErrorMessageDiv {
+    display: none;
+}
+
+.MessageDiv {
+    display: block;
+}
+
+.errorMessage {
+    display: block;
+    width: 200px;
+    height: 30px;
+    background-color: #ffebeb;
+    border: 1px solid #faccc6;
+    font-size: 18px;
+    color: #e4393c;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 6px;
+    margin: auto;
+}

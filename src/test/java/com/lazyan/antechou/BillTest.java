@@ -19,14 +19,14 @@ public class BillTest extends ApplicationTests {
         System.out.println(obj);
     }
 
-    @Test
-    public void test2(){
-        List<String> types = asList("三餐", "娱乐", "日用");
-        for (int i = 0;i< types.size();i++){
-            Ttype ttype = new Ttype();
-            ttype.setType(types.get(i));
-            ttype.setUid(1);
-            //billService.insertNewTtype(ttype);
-        }
-    }
+//    @Test
+//    public void test2(){
+//        List<String> types = asList("三餐", "娱乐", "日用");
+//        for (int i = 0;i< types.size();i++){
+//            Ttype ttype = new Ttype();
+//            ttype.setType(types.get(i));
+//            ttype.setUid(1);
+//            //billService.insertNewTtype(ttype);
+//        }
+//    }
 }

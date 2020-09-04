@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>安手账</title>
-    <script src="js/jquery/2.0.0/jquery.min.js"></script>
+    <!-- Bootstrap -->
     <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery/2.0.0/jquery.min.js"></script>
     <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="js/vue/2.5.16/vue.min.js"></script>
     <script src="js/axios/0.17.1/axios.min.js"></script>
@@ -26,12 +36,12 @@
                         var url =  this.uri;
                         if(0==this.account.mailbox.length){
                             $("span.errorMessage").html("请输入用户名");
-                            $("div.loginErrorMessageDiv").css("visibility","visible");
+                            $("div.loginErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
                         if(0==this.account.password.length){
                             $("span.errorMessage").html("请输入密码");
-                            $("div.loginErrorMessageDiv").css("visibility","visible");
+                            $("div.loginErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
 
@@ -42,7 +52,7 @@
                             }
                             else{
                                 $("span.errorMessage").html(result.message);
-                                $("div.loginErrorMessageDiv").css("visibility","visible");
+                                $("div.loginErrorMessageDiv").addClass("MessageDiv");
                             }
                         });
                     }
@@ -52,32 +62,24 @@
     </script>
 </head>
 <body ng-app="app" ng-controller="MainController">
-<h1>安手账用户登录</h1>
-
-<div id="workingArea">
-    <div class="loginDiv">
+<div class="container main">
+    <div class="login-box" id="workingArea">
         <div class="loginErrorMessageDiv">
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                <span class="errorMessage"></span>
-            </div>
+            <span class="errorMessage"></span>
         </div>
-
-        <table cellspacing="1" style="background-color: #a0c6e5">
-            <tr>
-                <td>账号：</td>
-                <td><input  v-model="account.mailbox" placeholder="请输入您的邮箱/账号"/></td>
-            </tr>
-            <tr>
-                <td>登陆密码</td>
-                <td><input v-model="account.password" type="password"  placeholder="请输入您的登陆密码" > </td>
-            </tr>
-        </table>
-        <a  @click="login"><input type="button" value="登录"/></a>
-        <a href="/register">注册</a>
+        <h1>Welcome to ANtechou</h1>
+        <div class="login-row">
+            <input class="txtb" type="text" v-model="account.mailbox" placeholder="Username" />
+        </div>
+        <div class="login-row">
+            <input class="txtb" type="password" v-model="account.password" placeholder="Password">
+        </div>
+        <div class="login-btnP">
+            <a @click="login" class="login-btn ">Login</a>
+            <a class="register" href="/register">Sign up</a>
+        </div>
     </div>
 </div>
-<br />
 
 </body>
 </html>

@@ -24,20 +24,20 @@ public class LoginController {
         String password = account.getPassword();
         String lost_ip = account.getLost_ip();
         boolean exist = loginService.isExist(mailbox,password);
-        Ip login_ip = new Ip();
-        String login_time = IpDateTime.IpDateTime();
-        login_ip.setIp(lost_ip);
-        login_ip.setDatetime(login_time);
-        login_ip.setAid(loginService.findAidByMailbox(mailbox));
-        login_ip.setUid(loginService.findUidByMailbox(mailbox));
         if(exist){
+            Ip login_ip = new Ip();
+            String login_time = IpDateTime.IpDateTime();
+            login_ip.setIp(lost_ip);
+            login_ip.setDatetime(login_time);
+            login_ip.setAid(loginService.findAidByMailbox(mailbox));
+            login_ip.setUid(loginService.findUidByMailbox(mailbox));
             loginService.addIp(mailbox,lost_ip);
             User user = loginService.findUserByMailbox(mailbox);
             loginService.insertIp(login_ip);
             session.setAttribute("user", user);
             return Result.success();
         }else{
-            String message ="账号密码错误";
+            String message ="账号或密码错误";
             return Result.fail(message);
         }
     }
