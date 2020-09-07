@@ -14,10 +14,6 @@ public class PageController {
         return "register";
     }
 
-    @GetMapping("/registerSuccess")
-    public String registerSuccess(){
-        return "registerSuccess";
-    }
 
     @GetMapping("/login")
     public String login(){

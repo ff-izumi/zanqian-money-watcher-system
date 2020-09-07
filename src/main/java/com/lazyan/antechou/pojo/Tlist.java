@@ -5,7 +5,7 @@ public class Tlist {
     private int id;
     private int uid;
     private int in_ex;
-    private int amount;
+    private double amount;
     private int tid;
     private String remarks;
     private String datetime;
@@ -34,11 +34,11 @@ public class Tlist {
         this.in_ex = in_ex;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

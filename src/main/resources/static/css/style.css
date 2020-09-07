@@ -1,25 +1,28 @@
 body {
     background: linear-gradient(#66ccff, #00ffcc);
     font-family: "Microsoft YaHei";
+    height: 100vh;
 }
 
 .main {
     height: 100vh;
 }
 
-.login-box {
+.login-box,
+.register-box {
     text-align: center;
     padding: 50px 30px 50px;
     margin: 8em auto 0;
 }
 
-.login-box h1 {
+.login-box，register-box h1 {
     font-weight: 400;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.login-row {
+.login-row,
+.register-row {
     margin: 10px 0px;
 }
 
@@ -37,16 +40,32 @@ body {
     text-align: center;
 }
 
-.login-btnP {
+.login-btnP,
+.register-btnP {
     margin: 20px;
 }
-.login-btnP a{display: block;width: 90px;margin:auto}
 
-.login-btnP a:hover {
-    color:#fff;
+.login-btnP a,
+.register-btnP a {
+    display: block;
+    width: 120px;
+    margin: auto
+}
+
+.login-btnP a:hover,
+.register-btnP a:hover {
+    color: #fff;
     text-decoration: none;
 }
-.register{line-height: 50px;font-size: 18px;font-weight: bold;color: #000!important;}
+
+.register,
+.login {
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000 !important;
+}
+
 .login-btn {
     background: #2c3e50;
     border: 0;
@@ -56,7 +75,8 @@ body {
     cursor: pointer;
 }
 
-.loginErrorMessageDiv {
+.loginErrorMessageDiv,
+.registerErrorMessageDiv {
     display: none;
 }
 
@@ -76,4 +96,95 @@ body {
     line-height: 30px;
     border-radius: 6px;
     margin: auto;
+}
+
+/* 注册页面 */
+.register-box {
+    width: 480px;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 主要页面 */
+.nav {
+    height: 50px;
+    background-color: #4781fe;
+}
+
+.nav .btn-group {
+    float: left;
+    margin: 10px;
+}
+
+.container-nav {
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 50px;
+
+
+}
+
+.wel-text {
+    color: #fff;
+    font-size: 16px;
+    line-height: 50px;
+    float: right;
+}
+
+.wel-text p {
+    float: left;
+}
+
+.banner {
+    height: 340px;
+}
+
+.ui-li {
+    height: 60px;
+    border: 2px solid #778899;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+.add-icon {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    bottom: 20px;
+}
+
+.add-icon img {
+    width: 60px;
+    height: 60px;
+}
+
+.list-left {
+    float: left;
+}
+
+.list-left-up {
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.list-left-down {
+    font-size: 14px;
+    line-height: 20px;
+    color: #778899
+}
+
+.list-right {
+    float: right;
+    text-align: right;
+}
+
+.list-right-up {font-weight: bold;font-size: 20px;}
+
+.ui-li .btn-group{
+    float: right;
+    margin: 10px;
 }
