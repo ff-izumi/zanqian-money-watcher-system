@@ -4,6 +4,7 @@ public class Ttype {
     private int id;
     private String type;
     private int uid;
+    private int ieid;
 
     public int getId() {
         return id;
@@ -27,5 +28,13 @@ public class Ttype {
 
     public void setUid(int uid) {
         this.uid = uid;
+    }
+
+    public int getIeid() {
+        return ieid;
+    }
+
+    public void setIeid(int ieid) {
+        this.ieid = ieid;
     }
 }

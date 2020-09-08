@@ -10,16 +10,16 @@ import java.util.List;
 public interface TtypeDao {
 
     //根据用户id查询所有分类
-    @Select("SELECT id,type FROM ttype WHERE uid = #{uid};")
+    @Select("SELECT id,type,ieid FROM ttype WHERE uid = #{uid};")
     List<HashMap> findAllTypeByUid(@Param("uid") int uid);
 
     //新增一个新分类
-    @Insert("INSERT INTO ttype(type,uid) VALUES (#{type},#{uid});")
+    @Insert("INSERT INTO ttype(type,uid,ieid) VALUES (#{type},#{uid},#{ieid});")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertNewTtype(Ttype ttype);
 
     //修改一个分类
-    @Update("UPDATE ttype SET type = #{type}, uid = #{uid} WHERE id = #{id};")
+    @Update("UPDATE ttype SET type = #{type}, uid = #{uid} ,ieid = #{ieid} WHERE id = #{id};")
     void updateTtypeByid(Ttype ttype);
 
     //根据id删除一条数据

@@ -124,8 +124,9 @@
                 </div>
                 <div class="list-right">
                     <div class="list-right-up">
-                        <span v-if="bean.in_ex === 0" style="color:red">{{bean.amount}}</span>
-                        <span v-else style="color:greenyellow">{{bean.amount}}</span>
+                        <span v-if="bean.in_ex === 1" style="color:red">{{bean.amount}}</span>
+                        <span v-else-if="bean.in_ex === 2" style="color:greenyellow">{{bean.amount}}</span>
+                        <span v-else style="color:black">{{bean.amount}}</span>
                     </div>
                     <div class="list-right-down">
                         {{bean.datetime | dateFilter}}

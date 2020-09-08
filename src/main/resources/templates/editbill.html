@@ -22,23 +22,52 @@
     <script src="js/axios/0.17.1/axios.min.js"></script>
     <script src="js/moment/2.22.2/moment.js"></script>
     <script>
-        $(function () {
+        //获取地址栏参数的函数
+        function getUrlParms(para){
+            var search=location.search; //页面URL的查询部分字符串
+            var arrPara=new Array(); //参数数组。数组单项为包含参数名和参数值的字符串，如“para=value”
+            var arrVal=new Array(); //参数值数组。用于存储查找到的参数值
+
+            if(search!=""){
+                var index=0;
+                search=search.substr(1); //去除开头的“?”
+                arrPara=search.split("&");
+
+                for(i in arrPara){
+                    var paraPre=para+"="; //参数前缀。即参数名+“=”，如“para=”
+                    if(arrPara[i].indexOf(paraPre)==0&& paraPre.length<arrPara[i].length){
+                        arrVal[index]=decodeURI(arrPara[i].substr(paraPre.length)); //顺带URI解码避免出现乱码
+                        index++;
+                    }
+                }
+            }
+
+            if(arrVal.length==1){
+                return arrVal[0];
+            }else if(arrVal.length==0){
+                return null;
+            }else{
+                return arrVal;
+            }
+        };
+
+        $(function(){
             var data4Vue = {
-                uri: 'addtlist',
+                uri:'updatetlist',
                 beans: [],
-                tlist: { in_ex: '', amount: '', tid: '', remarks: '', datetime: '' }
+                tlist: {in_ex:'',amount:'',tid:'',remarks:'',datetime:''}
             };
             //ViewModel
             var vue = new Vue({
                 el: '#workingArea',
                 data: data4Vue,
-                mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+                mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
                     this.list();
                 },
                 methods: {
-                    list: function () {
-                        var url = this.uri;
-                        axios.get(url).then(function (response) {
+                    list:function(){
+                        var url =  this.uri;
+                        axios.get(url).then(function(response) {
                             vue.beans = response.data;
                         });
                     },
@@ -54,38 +83,39 @@
                         $("div.two_btn").css("display","none")
                         $("div.one_btn").css("display","none")
                     },
-                    addbill: function () {
-                        var url = this.uri;
-                        if (0 == this.tlist.in_ex.length) {
+                    updatebill:function(){
+                        var id = getUrlParms("id");
+                        var url = this.uri+"/"+id;
+                        if(0==this.tlist.in_ex.length){
                             $("span.errorMessage").html("收支选项不可为空");
-                            $("div.addbillErrorMessageDiv").addClass("MessageDiv");
+                            $("div.updatebillErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
-                        if (0 == this.tlist.amount) {
+                        if(0==this.tlist.amount){
                             $("span.errorMessage").html("金额不可为空");
-                            $("div.addbillErrorMessageDiv").addClass("MessageDiv");
+                            $("div.updatebillErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
-                        if (0 == this.tlist.tid.length) {
+                        if(0==this.tlist.tid.length){
                             $("span.errorMessage").html("分类不可为空");
-                            $("div.addbillErrorMessageDiv").addClass("MessageDiv");
+                            $("div.updatebillErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
-                        if (0 == this.tlist.datetime) {
+                        if(0==this.tlist.datetime){
                             $("span.errorMessage").html("时间不可为空");
-                            $("div.addbillErrorMessageDiv").addClass("MessageDiv");
+                            $("div.updatebillErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
 
-                        axios.post(url, this.tlist).then(function (response) {
+                        axios.put(url,this.tlist).then(function(response) {
                             var result = response.data;
-                            if (result.code == 0) {
-                                alert("新增成功");
-                                location.href = "index";
+                            if(result.code==0){
+                                alert("更新成功");
+                                location.href="index";
                             }
-                            else {
+                            else{
                                 $("span.errorMessage").html(result.message);
-                                $("div.addbillErrorMessageDiv").addClass("MessageDiv");
+                                $("div.updatebillErrorMessageDiv").css("visibility","visible");
                             }
                         });
                     }
@@ -123,37 +153,37 @@
 
     </div>
 </div> <div class="container" id="workingArea">
-    <div class="addbillErrorMessageDiv">
+    <div class="updatebillErrorMessageDiv">
         <span class="errorMessage"></span>
     </div>
     <div class="row addbill-box">
         <div class="ie_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
             <label >
                 <a @click="one_btn">
-                <input  name="in_ex" v-model="tlist.in_ex" type="radio" value="1">
-                <span>支出</span>
+                    <input  name="in_ex" v-model="tlist.in_ex" type="radio" value="1">
+                    <span>支出</span>
                 </a>
             </label>
             <label>
                 <a @click="two_btn">
-                <input  name="in_ex" v-model="tlist.in_ex" type="radio" value="2">
-                <span>收入</span>
+                    <input  name="in_ex" v-model="tlist.in_ex" type="radio" value="2">
+                    <span>收入</span>
                 </a>
             </label>
             <label>
                 <a @click="three_btn">
-                <input name="in_ex" v-model="tlist.in_ex" type="radio" value="3">
-                <span>转账</span>
+                    <input name="in_ex" v-model="tlist.in_ex" type="radio" value="3">
+                    <span>转账</span>
                 </a>
             </label>
         </div>
         <div class="type_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
             <div class="one_btn">
                 <div class="fl"  v-for="bean in beans">
-                <label  v-if="bean.ieid === 1">
+                    <label  v-if="bean.ieid === 1">
                         <input type="radio" v-model="tlist.tid" v-bind:value="bean.id">
                         <span>{{bean.type}}</span>
-                </label>
+                    </label>
                 </div>
             </div>
             <div class="two_btn">
@@ -182,11 +212,10 @@
         </div>
         <div class="sub_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
             <div >
-                <a @click="addbill"><input class="sub_inp" type="button" value="确认"/></a>
+                <a @click="updatebill"><input class="sub_inp" type="button" value="确认"/></a>
             </div>
         </div>
     </div>
 </div>
 </body>
-
 </html>

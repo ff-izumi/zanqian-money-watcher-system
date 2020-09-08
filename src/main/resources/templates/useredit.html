@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>安手账</title>
-    <script src="js/jquery/2.0.0/jquery.min.js"></script>
+    <link href="http://img.lazyan.top/img/favicon.ico" rel="SHORTCUT ICON">
+    <!-- Bootstrap -->
     <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery/2.0.0/jquery.min.js"></script>
     <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="js/vue/2.5.16/vue.min.js"></script>
     <script src="js/axios/0.17.1/axios.min.js"></script>
+    <script src="js/moment/2.22.2/moment.js"></script>
     <script>
         $(function(){
             var data4Vue = {
@@ -23,22 +35,22 @@
                         var url =  this.uri;
                         if(0==this.user.username){
                             $("span.errorMessage").html("用户名不可为空");
-                            $("div.usereditErrorMessageDiv").css("visibility","visible");
+                            $("div.usereditErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
                         if(0==this.user.birthday){
                             $("span.errorMessage").html("生日不可为空");
-                            $("div.usereditErrorMessageDiv").css("visibility","visible");
+                            $("div.usereditErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
                         if(0==this.user.gender){
                             $("span.errorMessage").html("性别不可为空");
-                            $("div.usereditErrorMessageDiv").css("visibility","visible");
+                            $("div.usereditErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
                         if(0==this.user.introduction){
                             $("span.errorMessage").html("个性签名不可为空");
-                            $("div.usereditErrorMessageDiv").css("visibility","visible");
+                            $("div.usereditErrorMessageDiv").addClass("MessageDiv");
                             return;
                         }
 
@@ -50,7 +62,7 @@
                             }
                             else{
                                 $("span.errorMessage").html(result.message);
-                                $("div.loginErrorMessageDiv").css("visibility","visible");
+                                $("div.usereditErrorMessageDiv").addClass("MessageDiv");
                             }
                         });
                     }
@@ -60,38 +72,76 @@
 
     </script>
 </head>
-<body ng-app="app" ng-controller="MainController">
-<h1>安手账用户编辑</h1>
-<div id="workingArea">
-    <div class="usereditDiv">
-        <div class="usereditErrorMessageDiv">
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                <span class="errorMessage"></span>
+
+<body>
+<div class="nav">
+    <div class="container">
+        <div class="container-nav">
+            <!-- Split button -->
+            <div class="btn-group">
+                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="color:#4781fe;"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="/logout">注销</a></li>
+                    <li><a href="/index">返回</a></li>
+                </ul>
+            </div>
+            安手账
+            <span class="wel-text">
+                    <p th:text="${session.user.username}"></p>
+                    <p>，您好！</p>
+                </span>
+        </div>
+
+    </div>
+</div> <div class="container" id="workingArea">
+    <div class="usereditErrorMessageDiv">
+        <span class="errorMessage"></span>
+    </div>
+    <div class="row addbill-box">
+        <div class="username_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
+            <div class="username_inp">
+                用户名：<input class="username_inp1"  v-model="user.username" type="text"/>
             </div>
         </div>
-        <table cellspacing="1" style="background-color: #a0c6e5">
-            <tr>
-                <td>用户名：</td>
-                <td><input  v-model="user.username" type="text" th:text="${session.user.username}"/></td>
-            </tr>
-            <tr>
-                <td>生日：</td>
-                <td><input v-model="user.birthday" type="date" th:value="${session.user.birthday}"> </td>
-            </tr>
-            <tr>
-                <td>性别：</td>
-                <td><input name="gender" v-model="user.gender" type="radio" value="男"/>男
-                    <input name="gender" v-model="user.gender" type="radio" value="女"/>女
-                    <input name="gender" v-model="user.gender" type="radio" value="未知" checked/>未知
-                </td>
-            </tr>
-            <tr>
-                <td>个性签名：</td>
-                <td><input v-model="user.introduction" type="text" th:value="${session.user.introduction}"> </td>
-            </tr>
-        </table>
-        <a  @click="useredit"><input type="button" value="确认"/></a>
+
+        <div class="date_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
+            <div class="date_inp">
+                生日：<input v-model="user.birthday" type="date">
+            </div>
+        </div>
+
+        <div class="gender_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
+            <label >
+                <input name="gender" v-model="user.gender" type="radio" value="男">
+                <span>男</span>
+
+            </label>
+            <label>
+                <input name="gender" v-model="user.gender" type="radio" value="女">
+                <span>女</span>
+
+            </label>
+            <label>
+                <input name="gender" v-model="user.gender" type="radio" value="未知" checked>
+                <span>未知</span>
+            </label>
+        </div>
+        <div class="introduction_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
+            <div class="introduction_inp">
+                个性签名：<input class="introduction_inp1" v-model="user.introduction" type="text" >
+            </div>
+        </div>
+
+
+        <div class="sub_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
+            <div >
+                <a  @click="useredit"><input type="button" value="确认"/></a>
+            </div>
+        </div>
     </div>
 </div>
 </body>
