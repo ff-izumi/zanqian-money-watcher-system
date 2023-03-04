@@ -6,7 +6,7 @@ github:[lazyAN0/antechou](https://github.com/lazyAN0/antechou)
 
 gitee:[ lazyAN / antechou](https://gitee.com/lazyan/antechou)
 
-个人博客：[lazyAN](http://www.lazyan.top/)
+个人博客：[LuckyIzumi](https://luckyizumi.com//)
 
 **所选技术栈：**
 
@@ -44,8 +44,6 @@ gitee:[ lazyAN / antechou](https://gitee.com/lazyan/antechou)
 ```
 
 **数据库设计**
-
-![数据库设计表](http://img.lazyan.top/img/2.png)
 
 1. 账号表
 

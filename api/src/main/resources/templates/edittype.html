@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>安手账</title>
+    <link href="http://img.lazyan.top/img/favicon.ico" rel="SHORTCUT ICON">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script src="js/vue/2.5.16/vue.min.js"></script>
+    <script src="js/axios/0.17.1/axios.min.js"></script>
+    <script src="js/moment/2.22.2/moment.js"></script>
+    <script>
+        //获取地址栏参数的函数
+        function getUrlParms(para){
+            var search=location.search; //页面URL的查询部分字符串
+            var arrPara=new Array(); //参数数组。数组单项为包含参数名和参数值的字符串，如“para=value”
+            var arrVal=new Array(); //参数值数组。用于存储查找到的参数值
+
+            if(search!=""){
+                var index=0;
+                search=search.substr(1); //去除开头的“?”
+                arrPara=search.split("&");
+
+                for(i in arrPara){
+                    var paraPre=para+"="; //参数前缀。即参数名+“=”，如“para=”
+                    if(arrPara[i].indexOf(paraPre)==0&& paraPre.length<arrPara[i].length){
+                        arrVal[index]=decodeURI(arrPara[i].substr(paraPre.length)); //顺带URI解码避免出现乱码
+                        index++;
+                    }
+                }
+            }
+
+            if(arrVal.length==1){
+                return arrVal[0];
+            }else if(arrVal.length==0){
+                return null;
+            }else{
+                return arrVal;
+            }
+        };
+
+        function checkEmpty(value,text){
+            if(null==value || value.length==0){
+                alert(text+ "不能为空");
+                return false;
+            }
+            return true;
+        };
+
+        $(function() {
+            var data4Vue = {
+                uri: 'updatetype',
+                beans: [],
+                type: {type: '', uid: '',ieid:''}
+            };
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                methods: {
+                    updateType:function() {
+                        if(!checkEmpty(this.type.type, "分类名称"))
+                            return;
+                        if (0 == this.type.ieid.length) {
+                            alert("收支必选！");
+                            return;
+                        }
+                        var id = getUrlParms("id");
+                        var url = this.uri+"/"+id;
+                        axios.put(url,this.type).then(function(response) {
+                            var result = response.data;
+                            if(result.code==0){
+                                alert("更新成功");
+                                location.href="type";
+                            }
+                            else{
+                                $("span.errorMessage").html(result.message);
+                                $("div.typeErrorMessageDiv").css("visibility","visible");
+                            }
+                        });
+                    }
+                },
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="nav">
+    <div class="container">
+        <div class="container-nav">
+            <!-- Split button -->
+            <div class="btn-group">
+                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="color:#4781fe;"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="/logout">注销</a></li>
+                    <li><a href="/index">返回</a></li>
+                </ul>
+            </div>
+            安手账
+            <span class="wel-text">
+                    <p th:text="${session.user.username}"></p>
+                    <p>，您好！</p>
+                </span>
+        </div>
+
+    </div>
+</div>
+<div class="container" id="workingArea">
+    <div class="row addbill-box">
+        <div class="ie_type_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
+            <h3>分类名称</h3>
+            <div class="addtype_txt"><input @keyup.enter="addType" v-model.trim="type.type" type="text"
+                                            class="form-control"></div>
+
+            <label>
+                <input v-model.trim="type.ieid" type="radio" value="1">
+                <span>支出</span>
+
+            </label>
+            <label>
+                <input v-model.trim="type.ieid" type="radio" value="2">
+                <span>收入</span>
+            </label>
+        </div>
+        <div class="sub_btn col-xs-8 col-sm-12 col-md-12 col-lg-12">
+            <div >
+                <a @click="updateType"><input class="sub_inp" type="button" value="提交"/></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

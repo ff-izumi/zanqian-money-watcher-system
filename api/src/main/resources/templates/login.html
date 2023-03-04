@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>安手账-登录</title>
+    <link href="http://img.lazyan.top/img/favicon.ico" rel="SHORTCUT ICON">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script src="js/vue/2.5.16/vue.min.js"></script>
+    <script src="js/axios/0.17.1/axios.min.js"></script>
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script type="text/javascript">
+        var Ip=returnCitySN['cip'];
+
+        $(function(){
+            var data4Vue = {
+                uri:'addlogin',
+                result: [],
+                account:{mailbox:'', password:'', lost_ip:Ip},
+            };
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                methods: {
+                    login:function(){
+                        var url =  this.uri;
+                        if(0==this.account.mailbox.length){
+                            $("span.errorMessage").html("请输入用户名");
+                            $("div.loginErrorMessageDiv").addClass("MessageDiv");
+                            return;
+                        }
+                        if(0==this.account.password.length){
+                            $("span.errorMessage").html("请输入密码");
+                            $("div.loginErrorMessageDiv").addClass("MessageDiv");
+                            return;
+                        }
+
+                        axios.post(url,this.account).then(function(response) {
+                            var result = response.data;
+                            if(result.code==0){
+                                location.href="index";
+                            }
+                            else{
+                                $("span.errorMessage").html(result.message);
+                                $("div.loginErrorMessageDiv").addClass("MessageDiv");
+                            }
+                        });
+                    }
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+<div class="container main">
+    <div class="login-box" id="workingArea">
+        <div class="loginErrorMessageDiv">
+            <span class="errorMessage"></span>
+        </div>
+        <h1>Welcome to ANtechou</h1>
+        <div class="login-row">
+            <input class="txtb" type="text" v-model="account.mailbox" placeholder="请输入注册邮箱/账号" />
+        </div>
+        <div class="login-row">
+            <input class="txtb" type="password" v-model="account.password" placeholder="请输入密码">
+        </div>
+        <div class="login-btnP">
+            <a @click="login" class="login-btn ">登录</a>
+            <a class="register" href="/register">注册</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
