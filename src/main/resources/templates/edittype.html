@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>安手账</title>
+    <script src="js/jquery/2.0.0/jquery.min.js"></script>
+    <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script src="js/vue/2.5.16/vue.min.js"></script>
+    <script src="js/axios/0.17.1/axios.min.js"></script>
+    <script>
+        //获取地址栏参数的函数
+        function getUrlParms(para){
+            var search=location.search; //页面URL的查询部分字符串
+            var arrPara=new Array(); //参数数组。数组单项为包含参数名和参数值的字符串，如“para=value”
+            var arrVal=new Array(); //参数值数组。用于存储查找到的参数值
+
+            if(search!=""){
+                var index=0;
+                search=search.substr(1); //去除开头的“?”
+                arrPara=search.split("&");
+
+                for(i in arrPara){
+                    var paraPre=para+"="; //参数前缀。即参数名+“=”，如“para=”
+                    if(arrPara[i].indexOf(paraPre)==0&& paraPre.length<arrPara[i].length){
+                        arrVal[index]=decodeURI(arrPara[i].substr(paraPre.length)); //顺带URI解码避免出现乱码
+                        index++;
+                    }
+                }
+            }
+
+            if(arrVal.length==1){
+                return arrVal[0];
+            }else if(arrVal.length==0){
+                return null;
+            }else{
+                return arrVal;
+            }
+        };
+
+        function checkEmpty(value,text){
+            if(null==value || value.length==0){
+                alert(text+ "不能为空");
+                return false;
+            }
+            return true;
+        };
+
+        $(function() {
+            var data4Vue = {
+                uri: 'updatetype',
+                beans: [],
+                type: {type: '', uid: ''}
+            };
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                methods: {
+                    updateType:function() {
+                        if(!checkEmpty(this.type.type, "分类名称"))
+                            return;
+                        var id = getUrlParms("id");
+                        var url = this.uri+"/"+id;
+                        axios.put(url,this.type).then(function(response) {
+                            var result = response.data;
+                            if(result.code==0){
+                                alert("更新成功");
+                                location.href="type";
+                            }
+                            else{
+                                $("span.errorMessage").html(result.message);
+                                $("div.typeErrorMessageDiv").css("visibility","visible");
+                            }
+                        });
+                    }
+                },
+            });
+        });
+    </script>
+</head>
+<body ng-app="app" ng-controller="MainController">
+<h1>安手账分类编辑</h1>
+<div id="workingArea" >
+    <div class="panel panel-warning updateDiv">
+        <div class="panel-heading">新增分类</div>
+        <div class="panel-body">
+            <table class="updateTable">
+                <tr>
+                    <td>分类名称</td>
+                    <td><input  @keyup.enter="updateType" v-model.trim="type.type" type="text" class="form-control"></td>
+                </tr>
+
+                <tr class="submitTR">
+                    <td colspan="2" align="center">
+                        <a href="#nowhere"  @click="updateType" class="btn btn-success">提交</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
