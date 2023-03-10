@@ -1,4 +1,4 @@
-package com.lazyan.antechou.util;
+package com.zanqian.util;
 
 public class Result {
     public static int SUCCESS_CODE = 0;
