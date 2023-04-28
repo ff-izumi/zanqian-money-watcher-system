@@ -15,9 +15,13 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis.version>3.5.7</mybatis.version>
         <druid.version>1.2.16</druid.version>
         <mysql.version>8.0.32</mysql.version>
         <sa-token.version>1.34.0</sa-token.version>
+        <lombok.version>1.18.20</lombok.version>
+        <mybatis-generator.version>1.4.0</mybatis-generator.version>
+        <velocity.version>2.3</velocity.version>
     </properties>
 
     <parent>
@@ -44,6 +48,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
+        <!--mybatis-plus-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
         <!-- Mysql驱动包 -->
         <dependency>
             <groupId>mysql</groupId>
@@ -62,6 +72,24 @@
             <artifactId>sa-token-spring-boot-starter</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <!--代码生成工具-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -76,6 +104,7 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
