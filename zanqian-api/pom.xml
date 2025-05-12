@@ -17,6 +17,7 @@
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <mybatis.version>3.5.7</mybatis.version>
         <druid.version>1.2.16</druid.version>
+        <pool2.version>2.6.0</pool2.version>
         <mysql.version>8.0.32</mysql.version>
         <sa-token.version>1.34.0</sa-token.version>
         <lombok.version>1.18.20</lombok.version>
@@ -65,6 +66,17 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
+        </dependency>
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- spring2.X集成redis所需common-pool2-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>${pool2.version}</version>
         </dependency>
         <!--sa-token-->
         <dependency>
