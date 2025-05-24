@@ -1,18 +1,16 @@
-package com.zanqian.mapper;
+package com.zanqian.mapper.app;
 
-import com.zanqian.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+import com.zanqian.entity.app.User;
 
 /**
  * <p>
  *  Mapper 接口
  * </p>
  *
- * @author Ganquan
- * @since 2023-04-28
+ * @author GanQuan
+ * @since 2025-05-21
  */
-@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
 }

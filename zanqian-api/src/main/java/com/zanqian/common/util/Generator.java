@@ -2,19 +2,15 @@ package com.zanqian.common.util;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.fill.Column;
-import com.zanqian.controller.BaseController;
-import com.zanqian.entity.BaseEntity;
-import com.zanqian.service.BaseService;
-import com.zanqian.service.impl.BaseServiceImpl;
+import com.baomidou.mybatisplus.generator.fill.Property;
+
+import java.sql.SQLException;
+import java.util.Collections;
 
 /**
  * @Author GanQuan
@@ -22,75 +18,65 @@ import com.zanqian.service.impl.BaseServiceImpl;
  **/
 public class Generator {
 
-    private static final DataSourceConfig DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://localhost:3306/zanqian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8", "root", "")
-            .schema("zanqian")
-            .build();
+    private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
+            .Builder("jdbc:mysql://localhost:3306/zanqian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8",
+            "root",
+            "");
 
-    private static final GlobalConfig GLOBAL_CONFIG = new GlobalConfig.Builder()
-            .outputDir("src\\main\\java")
-            .author("Ganquan")
-            .dateType(DateType.TIME_PACK)
-            .commentDate("yyyy-MM-dd")
-            .build();
+    private static final String pkgName = ".app";
 
-    private static final StrategyConfig ENTITY_STRATEGY_CONFIG = new StrategyConfig.Builder()
-            .addTablePrefix("zq_")
-            .entityBuilder()
-            .superClass(BaseEntity.class)
-            .disableSerialVersionUID()
-            .enableChainModel()
-            .enableLombok()
-            .enableRemoveIsPrefix()
-            .enableTableFieldAnnotation()
-            .logicDeleteColumnName("deleted")
-            .logicDeletePropertyName("deleteFlag")
-            .naming(NamingStrategy.underline_to_camel)
-            .columnNaming(NamingStrategy.underline_to_camel)
-            .addSuperEntityColumns("created_time", "updated_time", "deleted")
-            .addTableFills(new Column("create_time", FieldFill.INSERT))
-            .addTableFills(new Column("updated_time", FieldFill.INSERT_UPDATE))
-            .idType(IdType.ASSIGN_UUID)
-            .formatFileName("%s")
-            .build();
+    /**
+     * 执行 run
+     */
+    public static void main(String[] args) throws SQLException {
+        FastAutoGenerator.create(DATA_SOURCE_CONFIG)
+                .globalConfig(builder -> { builder
+                    .author("GanQuan")        // 设置作者
+                    .enableSwagger()        // 开启 swagger 模式 默认值:false
+                    .disableOpenDir()       // 禁止打开输出目录 默认值:true
+                    .commentDate("yyyy-MM-dd") // 注释日期
+                    .dateType(DateType.ONLY_DATE)   //定义生成的实体类中日期类型 DateType.ONLY_DATE 默认值: DateType.TIME_PACK
+                    .outputDir(System.getProperty("user.dir") + "/src/main/java"); // 指定输出目录
+                })
 
-    private static final StrategyConfig CONTROLLER_STRATEGY_CONFIG = new StrategyConfig.Builder()
-            .addTablePrefix("zq_")
-            .controllerBuilder()
-            .superClass(BaseController.class)
-            .enableHyphenStyle()
-            .enableRestStyle()
-            .formatFileName("%sController")
-            .build();
+                .packageConfig(builder -> {
+                    builder.parent("com.zanqian") // 父包模块名
+                            .controller("controller" + pkgName)   //Controller 包名 默认值:controller
+                            .entity("entity" + pkgName)           //Entity 包名 默认值:entity
+                            .service("service" + pkgName)         //Service 包名 默认值:service
+                            .mapper("mapper" + pkgName)           //Mapper 包名 默认值:mapper
+                            //.moduleName("xxx")        // 设置父包模块名 默认值:无
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/src/main/resources/mapper")); // 设置mapperXml生成路径
+                    //默认存放在mapper的xml下
+                })
 
-    private static final StrategyConfig SERVICE_STRATEGY_CONFIG = new StrategyConfig.Builder()
-            .addTablePrefix("zq_")
-            .serviceBuilder()
-            .superServiceClass(BaseService.class)
-            .superServiceImplClass(BaseServiceImpl.class)
-            .formatServiceFileName("%sService")
-            .formatServiceImplFileName("%sServiceImpl")
-            .build();
+                .strategyConfig(builder -> {
+                    builder.addInclude("z_user") // 设置需要生成的表名 可边长参数“user”, “user1”
+                            .addTablePrefix("z_") // 设置过滤表前缀
+                            .addFieldPrefix("z_")
 
-    private static final StrategyConfig MAPPER_STRATEGY_CONFIG = new StrategyConfig.Builder()
-            .addTablePrefix("zq_")
-            .mapperBuilder()
-            .superClass(BaseMapper.class)
-            .enableMapperAnnotation()
-            .enableBaseResultMap()
-            .enableBaseColumnList()
-            .formatMapperFileName("%sMapper")
-            .formatXmlFileName("%sMapper")
-            .build();
+                            .entityBuilder()// 实体类策略配置
+                            .enableFileOverride()
+                            .idType(IdType.ASSIGN_ID)//主键策略  雪花算法自动生成的id
+                            .addTableFills(new Column("create_time", FieldFill.INSERT)) // 自动填充配置
+                            .addTableFills(new Property("update_time", FieldFill.INSERT_UPDATE))
+                            .disableSerialVersionUID()
+                            .enableLombok() //开启lombok
+                            .logicDeleteColumnName("deleted")// 说明逻辑删除是哪个字段
+                            .enableTableFieldAnnotation()// 属性加上注解说明
 
-    public static void main(String[] args) {
-        AutoGenerator generator = new AutoGenerator(DATA_SOURCE_CONFIG);
-        generator.strategy(ENTITY_STRATEGY_CONFIG)
-                .strategy(CONTROLLER_STRATEGY_CONFIG)
-                .strategy(SERVICE_STRATEGY_CONFIG)
-                .strategy(MAPPER_STRATEGY_CONFIG);
-        generator.global(GLOBAL_CONFIG);
-        generator.packageInfo(new PackageConfig.Builder().parent("com.zanqian").build());
-        generator.execute();
+                            .controllerBuilder() //controller 策略配置
+                            .formatFileName("%sController")
+                            .enableRestStyle() // 开启RestController注解
+
+                            .serviceBuilder()//service策略配置
+                            .formatServiceFileName("%sService")
+                            .formatServiceImplFileName("%sServiceImpl")
+
+                            .mapperBuilder()// mapper策略配置
+                            .formatMapperFileName("%sMapper")
+                            .formatXmlFileName("%sMapper");
+                })
+                .execute();
     }
 }

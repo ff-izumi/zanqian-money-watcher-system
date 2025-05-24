@@ -1,25 +1,19 @@
-package com.zanqian.controller;
+package com.zanqian.controller.app;
 
 import com.zanqian.common.result.Result;
-import com.zanqian.service.IUserService;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.annotation.Resource;
 
 /**
  * @Author GanQuan
  * @Date 2023-04-28 15:47
  **/
 @ControllerAdvice
-@RequestMapping("v1/api")
-public class BaseController {
+@RequestMapping("api/app/login")
+public class LoginController {
 
-    @Resource
-    private IUserService userService;
-
-    @PostMapping("login")
+    @PostMapping("account")
     public Result<Boolean> login(){
 
         Result<Boolean> res = Result.success();
