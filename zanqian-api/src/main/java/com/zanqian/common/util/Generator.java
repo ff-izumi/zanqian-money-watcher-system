@@ -13,8 +13,8 @@ import java.sql.SQLException;
 import java.util.Collections;
 
 /**
- * @Author GanQuan
- * @Date 2023-04-27 12:12
+ * @author GanQuan
+ * @date 2023-04-27 12:12
  **/
 public class Generator {
 
@@ -24,6 +24,7 @@ public class Generator {
             "");
 
     private static final String pkgName = ".app";
+    private static final String model = "/app";
 
     /**
      * 执行 run
@@ -40,13 +41,14 @@ public class Generator {
                 })
 
                 .packageConfig(builder -> {
-                    builder.parent("com.zanqian") // 父包模块名
-                            .controller("controller" + pkgName)   //Controller 包名 默认值:controller
-                            .entity("entity" + pkgName)           //Entity 包名 默认值:entity
-                            .service("service" + pkgName)         //Service 包名 默认值:service
-                            .mapper("mapper" + pkgName)           //Mapper 包名 默认值:mapper
+                    builder.parent("com.zanqian.modules") // 父包模块名
+                            .controller("controller" + pkgName)         //Controller 包名 默认值:controller
+                            .entity("entity" + pkgName)                 //Entity 包名 默认值:entity
+                            .service("service" + pkgName)               //Service 包名 默认值:service
+                            .serviceImpl("service" + pkgName + ".impl") //Service Impl 包名 默认值:service.impl
+                            .mapper("mapper" + pkgName)                 //Mapper 包名 默认值:mapper
                             //.moduleName("xxx")        // 设置父包模块名 默认值:无
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/src/main/resources/mapper")); // 设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/src/main/resources/mapper" + model)); // 设置mapperXml生成路径
                     //默认存放在mapper的xml下
                 })
 

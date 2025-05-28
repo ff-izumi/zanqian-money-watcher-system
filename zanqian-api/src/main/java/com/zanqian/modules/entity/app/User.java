@@ -1,4 +1,4 @@
-package com.zanqian.entity.app;
+package com.zanqian.modules.entity.app;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

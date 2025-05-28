@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author GanQuan
- * @date 2025-05-20 15-18
+ * @date 2025-05-20 15:18
  */
 @EnableKnife4j
 @Configuration
@@ -19,7 +19,7 @@ public class Knife4jConfiguration {
 
     @Bean
     public GroupedOpenApi appApi() {
-        return getOpenApi("APP端", "com.zanqian.controller.app");
+        return getOpenApi("APP端", "com.zanqian.modules.controller.app");
     }
 
 

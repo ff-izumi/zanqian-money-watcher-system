@@ -15,7 +15,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
-        <mybatis.version>3.5.7</mybatis.version>
         <druid.version>1.2.16</druid.version>
         <pool2.version>2.6.0</pool2.version>
         <mysql.version>8.0.32</mysql.version>
@@ -50,12 +49,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
-        </dependency>
-        <!--mybatis-plus-->
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
         </dependency>
         <!-- Mysql驱动包 -->
         <dependency>

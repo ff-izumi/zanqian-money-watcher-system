@@ -1,4 +1,4 @@
-package com.zanqian.controller.app;
+package com.zanqian.modules.controller.app;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

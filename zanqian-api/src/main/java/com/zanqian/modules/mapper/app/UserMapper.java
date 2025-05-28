@@ -1,7 +1,7 @@
-package com.zanqian.mapper.app;
+package com.zanqian.modules.mapper.app;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zanqian.entity.app.User;
+import com.zanqian.modules.entity.app.User;
 
 /**
  * <p>

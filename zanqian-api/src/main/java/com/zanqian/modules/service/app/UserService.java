@@ -1,6 +1,6 @@
-package com.zanqian.service.app;
+package com.zanqian.modules.service.app;
 
-import com.zanqian.entity.app.User;
+import com.zanqian.modules.entity.app.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

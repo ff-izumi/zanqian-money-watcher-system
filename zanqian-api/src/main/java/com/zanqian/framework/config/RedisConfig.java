@@ -15,8 +15,8 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * @Author GanQuan
- * @Date 2023-05-11 11:53
+ * @author GanQuan
+ * @date 2023-05-11 11:53
  **/
 @EnableCaching
 @Configuration
